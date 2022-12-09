@@ -50,16 +50,50 @@ userNameElement.onclick = () => {
 }
 
 userNumberElement.onclick = () => {
-    const userNumber =prompt('학번을 입력해주세요.');
-    localStorage.setItem('userNumber', userNumber);
-    setUserNumberInnerHtml(userNumber);
     
+    userNumberChange();
 }
 
 userEmailElement.onclick = () => {
+    
+    userEmailChange();
+    
+}
+
+function userNumberChange() {
+    const userNumber =prompt('학번을 입력해주세요.');
+    let check = 0;
+    if(userNumber.length === 9){
+       for(var i = 0; i < userNumber.length; i++){
+            if(userNumber.charAt(i) < '0' || userNumber.charAt(i) > '9'){
+                check = 1;
+            }
+        }
+        if(check === 0){
+            localStorage.setItem('userNumber', userNumber);
+            setUserNumberInnerHtml(userNumber);
+        }else{
+            userNumberChange()
+        }
+    }else{
+        userNumberChange();
+    }
+}
+
+function userEmailChange() {
     const userEmail =prompt('이메일을 입력해주세요.');
-    localStorage.setItem('userEmail', userEmail);
-    setUserEmailInnerHtml(userEmail);
+    let check = 0;
+    for(var i = 0; i < userEmail.length; i++){
+        if(userEmail.charAt(i) == '@'){
+            localStorage.setItem('userEmail', userEmail);
+            setUserEmailInnerHtml(userEmail);
+            check = 1;
+        }
+    }
+    if(check === 0){
+        userEmailChange();
+    }
+    
     
 }
 
